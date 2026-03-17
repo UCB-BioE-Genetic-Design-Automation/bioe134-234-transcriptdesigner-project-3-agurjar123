@@ -20,7 +20,8 @@ UCB_BioE134_GeneDesign/
 │   │   ├── codon_checker.py
 │   │   ├── forbidden_sequence_checker.py
 │   │   ├── hairpin_checker.py
-│   │   └── internal_promoter_checker.py
+│   │   ├── internal_promoter_checker.py
+│   │   └── internal_rbs_checker.py
 │   ├── data/
 │   │   └── codon_usage.txt
 │   ├── models/
@@ -44,6 +45,7 @@ UCB_BioE134_GeneDesign/
 │       │   ├── test_codon_checker.py
 │       │   ├── test_forbidden_sequence_checker.py
 │       │   ├── test_internal_promoter_checker.py
+│       │   ├── test_internal_rbs_checker.py
 │       ├── designer/
 │       │   ├── test_operon_designer.py
 │       │   └── test_transcript_designer.py
@@ -61,7 +63,7 @@ UCB_BioE134_GeneDesign/
 
 - **genedesign/**: This directory contains the core functionality for designing genetic constructs, including operons, transcripts, and RBS sequences.
   - `operon_designer.py`: Constructs a multi-gene operon sequence by arranging genes, promoters, and terminators based on a given composition. It allows for the design of complex genetic constructs.
-  - `transcript_designer.py`: Designs individual transcripts by integrating a ribosome binding site (RBS), coding sequence (CDS), and other elements to ensure proper translation of the gene.
+  - `transcript_designer.py`: Designs individual transcripts by integrating a ribosome binding site (RBS), coding sequence (CDS), and other elements to ensure proper translation of the gene. Uses guided random (Monte Carlo weighted by RSCU) with a sliding window fallback to satisfy all sequence constraints.
   - `rbs_chooser.py`: Selects optimal ribosome binding site (RBS) sequences to control translation initiation, optimizing gene expression based on the design.
   - `operon_to_seq.py`: Converts operon models into DNA sequences by combining genetic elements into a single continuous sequence ready for synthesis.
   - `transcript_to_seq.py`: Converts designed transcript objects into DNA sequences, generating the final nucleotide sequence of the transcript.
@@ -71,6 +73,7 @@ UCB_BioE134_GeneDesign/
   - `forbidden_sequence_checker.py`: Detects forbidden sequences that may interfere with proper gene function, including restriction sites or undesired motifs.
   - `hairpin_checker.py`: Detects secondary structures like hairpins in the sequence, which can cause issues in gene expression.
   - `internal_promoter_checker.py`: Detects internal promoter sequences that could lead to unintended gene expression within the construct.
+  - `internal_rbs_checker.py`: Detects internal Shine-Dalgarno sequences upstream of internal ATG codons that could cause unintended translation initiation.
 
 - **models/**: Contains data models used across the project to represent genetic components and structures.
   - `composition.py`: Represents a genetic composition, including its parts (e.g., promoter, genes).
